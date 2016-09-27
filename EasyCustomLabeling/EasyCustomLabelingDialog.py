@@ -36,15 +36,14 @@ from ui_EasyCustomLabeling import Ui_EasyCustomLabeling
 
 class EasyCustomLabelingDialog(QDialog, Ui_EasyCustomLabeling):
 	
-	def __init__(self, ldp):
+	def __init__(self, layerFields):
 		QDialog.__init__(self)
 		# Set up the user interface from Designer.
 		self.setupUi(self)
 		
-		self.loadFields(ldp)
+		self.loadFields(layerFields)
 		
-	def loadFields(self, ldp):
-		fields = ldp.fieldNameMap()
-		for fieldname, index in fields.iteritems():
-			self.labelfield.addItem(fieldname)
+	def loadFields(self, layerFields):
+		for field in layerFields:
+			self.labelfield.addItem(field.name())
 		

@@ -420,13 +420,16 @@ class EasyCustomLabeling(QObject):
               
         #end of general tests and user interaction --------------------------------------------------
         sourceLayerProvider = sourceLayer.dataProvider()
-        sourceLayerFields = sourceLayerProvider.fields()
+        if hasattr(sourceLayer, "fields"):
+            sourceLayerFields = sourceLayer.fields()
+        else:
+            sourceLayerFields = sourceLayer.pendingFields()
         
         feat = QgsFeature()
         
         #asks for default field to use as labeling (thanks to Victor Axbom Layer to labeled layer plugin)
         # create the dialog
-        self.dlg = EasyCustomLabelingDialog(sourceLayerProvider)
+        self.dlg = EasyCustomLabelingDialog(sourceLayerFields)
         ret_dlg_field = self.dlg.exec_()
         #cancels if user cancels dialog:
         if ret_dlg_field == 0 :  
